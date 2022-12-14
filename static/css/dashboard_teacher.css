@@ -1,0 +1,298 @@
+:root{
+    --light-bg: rgb(235, 235, 235);
+}
+body{
+    background-color: var(--light-bg);
+}
+#sidebar{
+    position: fixed;
+    top: 65px;
+    left: 15px;
+    bottom: 15px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-top: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+    border-bottom: 1px solid var(--element-outline);
+    box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+    backdrop-filter: blur(20px);
+    transition: 150ms;
+}
+#sidebar *{
+    transition: 150ms;
+}
+#sidebar.expanded{
+    width: 250px;
+    border-radius: 8px;
+}
+#sidebar-container{
+    position: relative;
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    padding-top: 44px;
+}
+#sidebar-toggle{
+    position: absolute;
+    height: 24px;
+    width: 40px;
+    right: 0;
+    top: 10px;
+    background: none;
+    border: none;
+    border-radius: 6px;
+    transition: 150ms;
+}
+#sidebar-toggle img{
+    height: 20px;
+}
+#sidebar-search{
+    position: relative;
+    height: 28px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+#sidebar-search-input{
+    background: rgba(255,255,255,0.7);
+    border: 1px solid var(--element-outline);
+    border-radius: 4px;
+    height: 28px;
+    padding-left: 10px;
+    font-size: 16px;
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+#sidebar-search-btn{
+    position: absolute;
+    right: 12px;
+    height: 28px;
+    border: none;
+    background: none;
+    transition: 150ms;
+    cursor: pointer;
+}
+#sidebar-search-btn:hover{
+    color: var(--accent10);
+}
+#sidebar-items, #special-sidebar-items{
+    list-style-type: none;
+}
+#sidebar-items li.sidebar-item, #special-sidebar-items li.sidebar-item{
+    padding: 2px;
+    height: 28px;
+    width: 100%;
+    border-radius: 4px;
+    margin: 5px 0;
+}
+#sidebar-items li.sidebar-item:hover, #special-sidebar-items li.sidebar-item:hover{
+    background: var(--accent2);
+    color: var(--accent10);
+}
+#sidebar-items li.sidebar-item.selected, #special-sidebar-items li.sidebar-item.selected{
+    background: var(--accent9);
+    color: white;
+}
+#sidebar-items li.sidebar-item i.fa, #special-sidebar-items li.sidebar-item i.fa{
+    margin: 0 8px;
+    width: 25px;
+}
+#sidebar-items li.sidebar-item span.item-name, #special-sidebar-items li.sidebar-item span.item-name{
+    line-height: 24px;
+    font-size: 17px;
+    opacity: 1;
+    cursor: pointer;
+}
+#special-sidebar-items{
+    position: absolute;
+    bottom: 0;
+    left: 10px;
+    right: 10px;
+}
+#sidebar.collapsed{
+    width: 60px;
+    overflow: hidden;
+}
+#sidebar.collapsed #sidebar-toggle{
+    right: 10px;
+    transform: rotateZ(180deg);
+}
+#sidebar.collapsed #sidebar-search{
+    opacity: 0;
+    height: 0;
+}
+#sidebar.collapsed #sidebar-items li.sidebar-item span.item-name, 
+#sidebar.collapsed #special-sidebar-items li.sidebar-item span.item-name{
+    opacity: 0;
+    margin-left: 300px;
+}
+#sidebar.collapsed #sidebar-items li.sidebar-item,
+#sidebar.collapsed #special-sidebar-items li.sidebar-item{
+    padding: 0;
+    height: 40px;
+    text-align: center;
+}
+#sidebar.collapsed #sidebar-items li.sidebar-item i.fa,
+#sidebar.collapsed #special-sidebar-items li.sidebar-item i.fa{
+    margin: auto;
+    line-height: 40px;
+    font-size: 24px;
+    width: auto;
+}
+#workspace{
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 8px;
+    backdrop-filter: blur(20px);
+    padding: 15px 40px;
+    border-top: 1px solid rgba(255, 255, 255, 0.7);
+    border-bottom: 1px solid var(--element-outline);
+    box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+    overflow-y: auto;
+    transition: 150ms;
+}
+#workspace.collapsed{
+    left: 280px;
+}
+#workspace.expanded{
+    left: 90px;
+}
+#workspace table.title-holder td{
+    vertical-align: middle;
+}
+#workspace-back{
+    height: 40px;
+    border: none;
+    background: none;
+    margin-right: 10px;
+    transition: 150ms;
+}
+#workspace-title{
+    font-size: 40px;
+    margin: 20px 0;
+}
+#grid-wrapper{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    row-gap: 10px;
+    column-gap: 10px;
+}
+#grid-wrapper div.tile{
+    padding: 20px;
+    border-radius: 8px;
+    background: rgb(255, 255, 255, 0.7);
+    border-top: 1px solid white;
+}
+#grid-wrapper div.tile h2{
+    font-size: 30px;
+}
+.d-flex{
+    display: flex;
+}
+.flex-column{
+    flex-direction: column;
+}
+.justify-evenly{
+    justify-content:space-evenly;
+}
+.justify-bw{
+    justify-content:space-between;
+}
+#profile-tile{
+    padding: 20px;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    display: grid;
+    grid-template-columns: 250px auto;
+    margin-bottom: 20px;
+}
+#profile-img-holder{
+    height: 160px;
+    width: 160px;
+    border-radius: 80px;
+    padding: 2px;
+    border: 5px solid var(--accent10);
+    vertical-align: top;
+}
+#profile-img-holder img{
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+}
+#profile-txt-holder h1{
+    font-size: 36px;
+}
+#profile-txt-holder span.teacher-name{
+    font-size: 44px;
+}
+#profile-txt-holder table{
+    margin-top: 10px;
+}
+#profile-txt-holder table td{
+    color: rgb(80, 80, 80);
+    padding: 5px;
+    vertical-align: center;
+}
+#profile-txt-holder table td span.role,
+#profile-txt-holder table td span.class,
+#profile-txt-holder table td span.subject{
+    height: 28px;
+    background-color: var(--accent10);
+    color: white;
+    padding: 3px 15px;
+    border-radius: 14px;
+    margin: 0 5px 0 0;
+}
+#attendance-tile{
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+section.btn-grp-type1{
+    overflow-x: auto;
+}
+section.btn-grp-type1 button{
+    margin: 10px 5px;
+    background-color: white;
+    border: 1px solid var(--element-outline);
+    height: 140px;
+    width: 110px;
+    border-radius: 6px;
+    transition: 150ms;
+    padding: 10px;
+    font-size: 12px;
+}
+section.btn-grp-type1 button:hover{
+    color: var(--accent10);
+    box-shadow: 0 4px 5px var(--accent2);
+}
+section.btn-grp-type1 button:focus{
+    border: 2px solid var(--accent10);
+}
+section h2.section-title{
+    font-size: 30px;
+}
+#options-band td button img{
+    width: 60px;
+    opacity: 0.5;
+}
+#options-band td button img.btn-hovered{
+    opacity: 1;
+}
+#options-band td button table.btn-layout{
+    height: 100%;
+    width: 100%;
+    text-align: center;
+}
+#options-band td button table.btn-layout td.img-holder{
+    width: 60px;
+    vertical-align: middle;
+}
+#options-band td button table.btn-layout td.txt-holder{
+    font-size: 12px;
+    vertical-align: bottom;
+    height: 25px;
+}

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/table.css' %}" />
+    {% comment %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/add_faculty.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/add_student.css' %}" /> {% endcomment %}
+</head>
+
+<body>
+    <div class="d-flex py-4">
+        <div class="glass m-auto p-5 ">
+            <h1>Document Details</h1>
+            <div class="d-flex justify-bw mv-5">
+                <h2 class="form-label">Title</h2>
+                <h2 class="form-info">{{title}}</h2>
+            </div>
+            {% comment %} <object data="{% url '/media/{{file}}' %} " width="800" height="600">
+            </object> {% endcomment %}
+            <div class="d-flex justify-bw mv-5">
+                <h2 class="form-label">Description</h2>
+                <h2 class="form-info text">{{description}}</h2>
+            </div>
+            <div class="d-flex justify-bw mv-5">
+                <h2 class="form-label">Type</h2>
+                <h2 class="form-info text">{{type}}</h2>
+            </div>
+            <div class="d-flex justify-bw mv-5">
+                <h2 class="form-label">Verification Link</h2>
+                <a href="{{link}}" target="_blank" class="form-info text">{{link}}</a>
+            </div>
+            <div class="d-flex justify-bw mv-5">
+                <h2 class="form-label">Date of Event</h2>
+                <h2 class="form-info text">{{date}}</h2>
+            </div>
+            <div class="d-flex justify-bw mv-5">
+                <h2 class="form-label">Certificate</h2>
+                <div class="pdf-frame">
+                    {% if filetype == "pdf" %}
+                    <embed class="pdf" src="/media{{file.url}}" type="application/pdf" frameBorder="0" scrolling="auto"
+                        height="100%" width="100%">
+                    </embed>
+                    {% else %}
+                    <img src="/media{{file.url}}" class="pdf" />
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="" async defer></script>
+</body>
+
+</html>
+
+
+{% comment %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>View</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dashboard_teacher.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/attendance_teacher.css' %}" />
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+    <div class="d-felx flex-column" id="workplace">
+        <div class="d-flex">
+            <h2>Title : {{title}}</h2>
+        </div>
+        <div class="d-flex">
+            <h2>Date : {{date}}</h2>
+        </div>
+        <div class="d-flex">
+            <h2>Description : {{description}}</h2>
+        </div>
+        <div class="d-flex">
+            <h2>Type : {{type}}</h2>
+        </div>
+        <div class="d-flex">
+            <h2>Verification Link : {{link}}</h2>
+        </div>
+        <div>
+            <embed src="/media/data/{{file}}" type="application/pdf" frameBorder="0" scrolling="auto" height="100%"
+                width="100%">
+            </embed>
+        </div>
+        <!--<h2>Title : {{title}}</h2>-->
+
+    </div>
+    <script src="" async defer></script>
+</body>
+
+</html> {% endcomment %}

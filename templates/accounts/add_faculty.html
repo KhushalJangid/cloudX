@@ -1,0 +1,98 @@
+{% comment %} {% extends 'base.html' %}
+{% load static %}
+{% block head %} {% endcomment %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Add a Faculty</title>
+</head>
+
+<body>
+    <div class="d-flex py-4">
+        <form method="post" class="m-auto">
+            {% csrf_token %}
+            <div class="glass p-5">
+                <h1>Add Faculty</h1>
+                <div class="d-flex justify-bw mv-1">
+                    <h2 class="form-label">Name</h2>
+                    <input name="name" type="text" placeholder="Name" class="form-input m-auto">
+                </div>
+                <div class="d-flex justify-bw mv-1">
+                    <h2 class="form-label">Email</h2>
+                    <input name="email" type="email" placeholder="Email" class="form-input m-auto">
+                </div>
+                <div class="d-flex justify-bw mv-1">
+                    <h2 class="form-label">Password</h2>
+                    <input name="password" id="password" placeholder="Password" type="password"
+                        class="form-input m-auto">
+                </div>
+                <div class="d-flex justify-bw mv-1">
+                    <h2 class="form-label">Confirm Password</h2>
+                    <input name="password-0" id="password-0" placeholder="Confirm Password" type="password"
+                        class="form-input m-auto">
+                </div>
+                <div class="form-label mv-1">
+                    <input type="checkbox" style="cursor:pointer;" id="showPassword" onchange="showPass(this)"
+                        unchecked>
+                    <label for="showPassword" style="cursor:pointer;">Show Password</label>
+                </div>
+                <button class="btn m-auto w-50 mv-1" type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function showPass(checkbox) {
+            if (checkbox.checked == true) {
+                document.getElementById("password").type = "text"
+                document.getElementById("password-0").type = "text"
+            } else {
+                document.getElementById("password").type = "password"
+                document.getElementById("password-0").type = "password"
+            }
+        }
+    </script>
+</body>
+
+</html>
+{% comment %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/add_student.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/add_faculty.css' %}" />
+{% endblock head %}
+{% block title %}Add a Faculty{% endblock title %}
+{% block body %}
+<div class="d-flex p-8">
+    <form method="post" class="m-auto">
+        {% csrf_token %}
+        <div class="glass">
+            <h1 style="font-size:36px; padding:2rem;">Add Teacher</h1>
+            <div class="d-flex mv-5">
+                <h2 class="form-label">First name</h2>
+                <input name="first_name" class="form-input">
+            </div>
+            <div class="d-flex mv-5">
+                <h2 class="form-label">Last name</h2>
+                <input name="last_name" class="form-input">
+            </div>
+            <div class="d-flex mv-5 justify-bw">
+                <h2 class="form-label">Subject</h2>
+                <input name="subject" class="form-input">
+            </div>
+            <div class="d-flex mv-5">
+                <h2 class="form-label">Aadhar No</h2>
+                <input name="aadhar" class="form-input">
+            </div>
+            <button class="btn" type="submit">Submit</button>
+        </div>
+    </form>
+</div>
+
+<script src="" async defer></script>
+{% endblock body %} {% endcomment %}

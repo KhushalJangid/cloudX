@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/table.css' %}">
+</head>
+
+<body>
+    <div class="d-flex flex-column p-5">
+        <div class="d-flex p-5">
+            <img class="avatar m-auto" src="/media/{{avatar}}" />
+            <h1 class="title m-auto">Hi, {{name}}</h1>
+            <button class="btn upload-btn m-auto" onclick="window.location='/upload'">+ Upload New</button>
+            <button class="btn upload-btn m-auto" onclick="window.location='/accounts/profile'">Edit Profile</button>
+        </div>
+        <section id="classes">
+            <div class="d-flex justify-bw">
+                <h2 class="section-title m-default">Your Certificates</h2>
+                <form method="get" action="filter" class="ib d-flex">
+                    <input name="filter" hidden>
+                    <h2 class="m-auto section-title">From</h2>
+                    <input class="m-default form-input-sm" name="from" type="date" id="date-picker">
+                    <h2 class="m-auto section-title">To</h2>
+                    <input class="m-default form-input-sm" name="to" type="date" id="date-picker">
+                    <select name="type" id="type" class="theme form-input-sm m-default">
+                        <option value="sports">Sports</option>
+                        <option value="tech">Technical</option>
+                        <option value="cultural">Cultural</option>
+                        <option value="other">Other</option>
+                        <option value="all" selected="true">All</option>
+                    </select>
+                    <button class="btn-sm m-default" type="submit">Search</button>
+                </form>
+            </div>
+            <div style="overflow:auto">
+                <table id="classes-viewer" width="100%" cellspacing="0">
+                    <tr class="class-row">
+                        <td class="class-details">
+                            <span class="class-identifier">S.no</span>
+                        </td>
+                        <td class="class-details">
+                            <span class="class-identifier">Title</span>
+                        </td>
+                        <td class="class-details">
+                            <span class="class-identifier">Type</span>
+                        </td>
+                        <td class="class-details">
+                            <span class="class-identifier">Date</span>
+                        </td>
+                        <td></td>
+                    </tr>
+                    {%for key,values in data.items%}
+                    <tr class="class-row">
+                        <td class="class-details">
+                            <span class="class-name class-identifier">{{key}}
+                            </span>
+                        </td>
+                        <td class="class-details">
+                            <span class="class-name class-identifier">{{values.title}}
+                            </span>
+                        </td>
+                        <td class="class-details">
+                            <span class="class-name class-identifier">{{values.type}}
+                            </span>
+                        </td>
+                        <td class="class-details">
+                            <span class="class-name class-identifier">{{values.date}}
+                            </span>
+                        </td>
+                        <td class="actions justify-center" style="display:flex;">
+                            <button class="btn-sm action-btn"
+                                onclick="window.location='/view/{{values.id}}'">View</button>
+                            <button class="btn-sm btn-info action-btn"
+                                onclick="window.location='/edit/{{values.id}}'">Edit</button>
+                            <button class="btn-sm btn-danger action-btn"
+                                onclick="window.location='/delete/{{values.id}}'">Delete</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </section>
+        <script src="" async defer></script>
+</body>
+
+</html>
+
+
+
+{% comment %} <html>
+
+<head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dashboard_teacher.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/attendance_teacher.css' %}" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <main id="workspace">
+        <h1 id="workspace-title">Dashboard</h1>
+        <div>
+            <div class="d-flex justify-evenly">
+                <div class="d-flex">
+                    <div id="profile-img-holder">
+                        <!--<img
+                    src="https://fujifilm-x.com/wp-content/uploads/2019/08/xc16-50mmf35-56-ois-2_sample-images03.jpg" />-->
+                        <img src="/media/{{avatar}}" />
+                    </div>
+                    <div id="profile-txt-holder">
+                        <h1>Hi, <span class="teacher-name">{{name}}</span></h1>
+                        <table>
+                            <tr>
+                                <td>
+                                    Roles:
+                                </td>
+                                <td>
+                                    <span class="role">Teacher</span><span class="role">Coordinator</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Classes:
+                                </td>
+                                <td>
+                                    {% for class in classes %}
+                                    <span class="class">{{class}}</span>
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Subjects:
+                                </td>
+                                <td>
+                                    <span class="subject">Mathematics</span><span class="subject">Physics</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div id="profile-img-holder">
+                    <!--<img
+                    src="https://fujifilm-x.com/wp-content/uploads/2019/08/xc16-50mmf35-56-ois-2_sample-images03.jpg" />-->
+                    <img src="/media/{{avatar}}" />
+                </div>
+            </div>
+            <div class="tile">
+                Your Certificates
+            </div>
+        </div>
+        <section id="classes">
+            <form class="ib">
+                <!--'ib' stands for inline-block-->
+                <!--<button class="theme" type="button">Today</button>-->
+                <input name="date" type="date" id="date-picker" style="padding: 0.2rem;font-size: 16px;">
+                <select name="type" class="theme">
+                    <option value="sports">Sports</option>
+                    <option value="tech">Technical</option>
+                    <option value="cultural">Cultural</option>
+                    <option value="other">Other</option>
+                    <option value="all" selected="true">All</option>
+                </select>
+                <button class="accent-theme user-interactive" type="submit">Search</button>
+            </form>
+            <table id="classes-viewer" width="100%" cellspacing="0">
+                {%for key,values in data.items%}
+                <tr class="class-row">
+                    <td class="class-details">
+                        <span class="class-name">Title<span class="class-identifier">{{values.title}}
+                            </span></span>
+                    </td>
+                    <td class="class-details">
+                        <span class="class-name">Type<span class="class-identifier">{{values.type}}
+                            </span></span>
+                    </td>
+                    <td class="class-details">
+                        <span class="class-name">Date<span class="class-identifier">{{values.date}}
+                            </span></span>
+                    </td>
+                    <td class="actions">
+                        <button class="accent-theme user-interactive"
+                            onclick="window.location='/attendance/view/{{values.class}}/{{values.section}}?date={{values.date}}'">View</button>
+                        <button class="accent-theme user-interactive"
+                            onclick="window.location='/attendance/edit/{{values.class}}/{{values.section}}?date={{values.date}}'">Edit</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </section>
+    </main>
+</body>
+
+</html> {% endcomment %}

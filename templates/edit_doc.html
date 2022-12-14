@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
+    {% comment %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/add_faculty.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/add_student.css' %}" /> {% endcomment %}
+</head>
+
+<body>
+    <div class="d-flex py-4">
+        <form method="post" enctype="multipart/form-data" class="m-auto">
+            {% csrf_token %}
+            <div class="glass p-5 ">
+                <h1>Edit Documents</h1>
+                <div class="d-flex justify-bw mv-1">
+                    <h2 class="form-label">Title</h2>
+                    <input name="title" type="text" value="{{title}}" class="form-input">
+                </div>
+                <div class="d-flex justify-bw mv-1">
+                    <h2 class="form-label">Description</h2>
+                    <textarea name="description" rows="4" class="form-input">{{description}}
+                    </textarea>
+                </div>
+                <div class="d-flex justify-bw mv-1">
+                    <h2 class="form-label">Type</h2>
+                    <select name="type" type="text" value="{{type}}" class="form-input">
+                        <option value="sports">Sports</option>
+                        <option value="tech">Technical</option>
+                        <option value="cutural">Cultural</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="d-flex justify-bw mv-1">
+                    <h2 class="form-label">Certificate</h2>
+                    <div class="d-flex flex-column w-100" id="preview-container">
+                        <input id="file" name="file" type="file" accept=".png,.svg,.jpg,.jpeg,.pdf" hidden>
+                        <label class="btn-sm w-50 m-auto" for="file">Choose file</label>
+                        <div class="pdf-frame mv-1">
+                            {% if filetype == "pdf" %}
+                            <embed class="pdf" src="/media{{file.url}}" type="application/pdf" frameBorder="0"
+                                scrolling="auto" height="100%" width="100%">
+                            </embed>
+                            {% else %}
+                            <img src="/media{{file.url}}" class="pdf" />
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-bw mv-1">
+                    <h2 class="form-label">Verification Link</h2>
+                    <input name="verification-link" value="{{link}}" type="text" class="form-input">
+                </div>
+                <div class="d-flex justify-bw mv-1">
+                    <h2 class="form-label">Date of Event</h2>
+                    <input name="date" type="date" value="{{date}}" class="form-input">
+                </div>
+                <button class="btn m-auto w-50" type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+    <script src="{% static 'js/preview.js' %}"></script>
+    <script>
+        document.getElementById("file").addEventListener("change", createThumbnail)
+    </script>
+</body>
+
+</html>
