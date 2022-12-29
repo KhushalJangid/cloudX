@@ -1,6 +1,7 @@
 from django.db import models
 from Accounts.models import User
-from os import path
+from os import path,remove
+from cloudX.settings import MEDIA_ROOT
 from cloudX.settings import domain
 
 _types = [
@@ -18,9 +19,13 @@ class Data(models.Model):
     description = models.TextField(null=True,blank=True)
     link = models.TextField(null=True,blank=True)
     type = models.CharField(max_length=10,choices=_types)
-    file = models.FileField(upload_to='media/data/')
+    file = models.FileField(upload_to='data/')
     date = models.DateField()
     
     def extension(self):
         name, extension = path.splitext(self.file.name)
         return extension
+    
+    def delete(self, *args, **kwargs):
+        remove(path.join(MEDIA_ROOT, self.file.name))
+        super(Data,self).delete(*args,**kwargs)

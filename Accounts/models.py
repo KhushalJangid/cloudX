@@ -46,7 +46,7 @@ class User(AbstractUser):
 
 class Student(models.Model):
     # active = models.BooleanField(default=False)
-    user = models.OneToOneField(to = User,on_delete=models.CASCADE)
+    user_obj = models.OneToOneField(to = User,on_delete=models.CASCADE)
     rollno = models.CharField(null=True,unique=True,max_length=15)
     semester = models.IntegerField()
     f_name = models.CharField(blank=True,null=True,max_length=40)
@@ -54,6 +54,6 @@ class Student(models.Model):
     m_name = models.CharField(blank=True,null=True,max_length=40)
     m_phone = models.CharField(blank=True,null=True,unique=True,max_length=15)
     gender = models.CharField(blank=True,null=True,max_length=10,choices=_genders)
-    dob = models.DateField(auto_now=True)
+    dob = models.DateField()
     address = models.TextField(blank=True,null=True,max_length=200)
 

@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.shortcuts import redirect, render
 from .models import Student, User
 from django.contrib.auth.decorators import login_required,permission_required
-
+from Accounts.serializers import studentSerializer
 # Create your views here.
 
 def login_user(request):
@@ -20,7 +20,7 @@ def login_user(request):
             user = User.objects.get(email=email)
             if not user.is_superuser:
                 try :
-                    student = Student.objects.get(user=user)
+                    student = Student.objects.get(user_obj=user)
                 except Exception as e:
                     print(e)
                     return redirect("/accounts/profile")
@@ -99,7 +99,7 @@ def profile(request):
     if request.method == "POST":
         phone = request.POST.get("student-phoneNumber")
         rollno = request.POST.get("rollno")
-        sem = request.POST.get("semester")
+        sem = int(request.POST.get("semester"))
         f_name = request.POST.get("father-name")
         m_name = request.POST.get("mother-name")
         f_phone = request.POST.get("father-phone-number")
@@ -108,35 +108,52 @@ def profile(request):
         dob = request.POST.get("dob")
         address = request.POST.get("address")
         user = request.user
-        user.phone = phone
-        user.save()
-        Student.objects.create(
-            user=user,
-            rollno=rollno,
-            semester = sem,
-            f_name = f_name,
-            f_phone = f_phone,
-            m_name = m_name,
-            m_phone = m_phone,
-            gender = gender,
-            dob=dob,
-            address = address 
-        )
-        return redirect("/")
+        try :
+            st = Student.objects.get(user_obj=user)
+            print(dob)
+            user.phone = phone
+            user.save()
+            st.rollno=rollno
+            st.semester = sem
+            st.f_name = f_name
+            st.f_phone = f_phone
+            st.m_name = m_name
+            st.m_phone = m_phone
+            st.gender = gender
+            st.dob=dob
+            st.address = address 
+            st.save()
+            return redirect("/")
+        except Student.DoesNotExist:
+            user.phone = phone
+            user.save()
+            Student.objects.create(
+                user_obj=user,
+                rollno=rollno,
+                semester = sem,
+                f_name = f_name,
+                f_phone = f_phone,
+                m_name = m_name,
+                m_phone = m_phone,
+                gender = gender,
+                dob=dob,
+                address = address 
+            )
+            return redirect("/")
     user = request.user
     try:
-        meta = Student.objects.get(user=user)
+        meta = studentSerializer(Student.objects.get(user_obj=user))
     except:
         meta = {}
     context = {"user":user,"meta":meta}
-    return render(request,"accounts/view_profile.html",context)
+    return render(request,"accounts/edit_profile.html",context)
 
 @login_required
 @permission_required("isSuperuser",raise_exception=True)
 def view_profile(request,id):
     user = User.objects.get(id=id)
     try:
-        meta = Student.objects.get(user=user)
+        meta = studentSerializer(Student.objects.get(user_obj=user))
     except:
         meta = {}
     context = {"user":user,"meta":meta}

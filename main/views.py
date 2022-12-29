@@ -9,10 +9,11 @@ from main.models import Data
 from pandas import DataFrame as df
 # Create your views here.
 from pathlib import Path
-from os import path
+from os import path,remove
+from cloudX.settings import MEDIA_ROOT
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(path.abspath(__file__)).parent.parent
 BASE_URL = "http://127.0.0.1:8000/"
 
 def parseGet(request,kw):
@@ -37,6 +38,8 @@ def download(request):
     if _from != "":
         query = query.filter(date__gte = _from)
     filename = parse_data(query)
+    if filename == None:
+        return redirect("/")
     filepath = path.join(BASE_DIR,filename)
     if path.exists(filepath):
         with open(filepath, "rb") as excel:
@@ -174,24 +177,25 @@ def edit(request,id):
             type = request.POST.get('type')
             date = request.POST.get('date')
             file = request.FILES.get('file')
-            print(file)
             query.title=title
             query.description=description
             query.type=type
             query.date=date
             query.link=link
             if file != None:
+                remove(path.join(MEDIA_ROOT,query.file.name))
                 query.file=file
             query.save()
             return redirect("/")
         else:
             return Response("You are not Authorized",status=status.HTTP_403_FORBIDDEN)
     query = Data.objects.get(id=id)
+    print(query.file)
     ext = query.extension()
     ctx = {
         "title":query.title,
         "description":query.description,
-        "type":query.get_type_display(),
+        "type":query.type,
         "date":query.date.strftime("%Y-%m-%d"),
         "link":query.link,
         "file":query.file,
@@ -230,6 +234,8 @@ def parse_data(queryset):
     filename = "data.xlsx"
     # data = list(Data.objects.all().values())
     data = list(queryset.values())
+    if data == []:
+        return None
     data = df(data)
     # data.set_index("id")
     data.loc[:,"file"] = [ f"{BASE_URL}media/{x}" for x in data.loc[:,"file"]]

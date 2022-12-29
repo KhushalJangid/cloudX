@@ -14,13 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from django.urls import include
-from django.conf import settings
+from django.urls import path, include
+from cloudX import settings
 from django.conf.urls.static import static
 
-admin.site.site_header = "Solution ONE"
-admin.site.site_title = "Solution ONE | Admin"
+admin.site.site_header = "Cloud X"
+admin.site.site_title = "Cloud X | Admin"
 admin.site.index_title = "Welcome to Admin Control Pannel"
 
 urlpatterns = [
@@ -28,4 +27,4 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("accounts/",include("Accounts.urls")),
     path("",include("main.urls")),
-]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)+static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)

@@ -5,7 +5,7 @@
     {% load static %}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Your Profile</title>
+    <title>Student Profile</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="">
@@ -17,56 +17,61 @@
         <form method="post" class="m-auto">
             {% csrf_token %}
             <div class="glass p-5 ">
-                <h1>Your Profile</h1>
-                <img class="avatar m-auto" src="/media/{{user.avatar.url}}" />
+                <div class="flex justify-center">
+                    <div class="d-flex"><button type="button" onClick="window.location ='/'" class="icon-btn m-auto"><i
+                                style="font-size:36px;color:black;" class="bi bi-arrow-left-circle"></i></button></div>
+                    <h1>Student Profile</h1>
+                </div>
+                <img class="avatar m-auto" src="{{user.avatar.url}}" />
                 <div class="d-flex justify-bw mv-1">
                     <h2 class="form-label">Name</h2>
                     <input name="name" value="{{user.first_name}} {{user.last_name}}" placeholder="Name" type="text"
-                        class="form-input " required>
+                        class="form-input " required readOnly>
                 </div>
                 <div class="d-flex justify-bw mv-1">
                     <h2 class="form-label">Student Email</h2>
                     <input name="student-email" value="{{user.email}}" placeholder="Email" type="text"
-                        class="form-input " required>
+                        class="form-input " required readOnly>
                 </div>
                 <div class="d-flex justify-bw mv-1">
                     <h2 class="form-label">Student Phone Number</h2>
-                    <input name="student-phoneNumber" value="{{user.phone}}" placeholder="Phone Number" type="text"
-                        class="form-input " required>
+                    <input name="student-phoneNumber" value="{{user.phone}}" placeholder="Phone Number" type="number"
+                        maxlength="10" class="form-input " required readOnly>
                 </div>
                 <div class="d-flex justify-bw mv-1">
                     <h2 class="form-label">RTU Roll No.</h2>
                     <input name="rollno" value="{{meta.rollno}}" placeholder="RTU Roll Number" type="text"
-                        class="form-input " required>
+                        class="form-input " maxlength="10" required readOnly>
                 </div>
                 <div class="d-flex justify-bw mv-1">
                     <h2 class="form-label">Semester</h2>
-                    <input name="semester" value="{{meta.semester}}" placeholder="Semester" type="text"
-                        class="form-input " required>
+                    <input name="semester" value="{{meta.semester}}" placeholder="Semester" type="number" maxlength="1"
+                        class="form-input " required readOnly>
                 </div>
                 <div class="d-flex justify-bw mv-1">
                     <h2 class="form-label">Father's Name</h2>
                     <input name="father-name" value="{{meta.f_name}}" placeholder="Father's Name" type="text"
-                        class="form-input " required>
+                        class="form-input " required readOnly>
                 </div>
                 <div class="d-flex justify-bw mv-1">
                     <h2 class="form-label">Mother's Name</h2>
                     <input name="mother-name" value="{{meta.m_name}}" placeholder="Mother's Name" type="text"
-                        class="form-input " required>
+                        class="form-input " required readOnly>
                 </div>
                 <div class="d-flex justify-bw mv-1">
                     <h2 class="form-label">Father's Phone Number</h2>
                     <input name="father-phone-number" value="{{meta.f_phone}}" placeholder="Father's Phone Number"
-                        type="text" class="form-input " required>
+                        type="number" maxlength="10" class="form-input " required readOnly>
                 </div>
                 <div class="d-flex justify-bw mv-1">
                     <h2 class="form-label">Mother's Phone Number</h2>
                     <input name="mother-phone-number" value="{{meta.m_phone}}" placeholder="Mother's Phone Number"
-                        type="text" class="form-input " required>
+                        type="number" maxlength="10" class="form-input " required readOnly>
                 </div>
                 <div class="d-flex justify-bw mv-1">
                     <h2 class="form-label">Gender</h2>
-                    <select name="gender" value="{{meta.gender}}" required class="form-input ">
+                    <select name="gender" value="{{meta.get_gender_display}}" required class="form-input" readOnly>
+                        <option value="">Select</option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                         <option value="other">Other</option>
@@ -74,14 +79,14 @@
                 </div>
                 <div class="d-flex justify-bw mv-1">
                     <h2 class="form-label">Date of Birth</h2>
-                    <input name="dob" value="{{meta.dob}}" type="date" required class="form-input ">
+                    <input name="dob" value="{{meta.dob}}" type="date" required class="form-input" readOnly>
                 </div>
                 <div class="d-flex justify-bw mv-1">
                     <h2 class="form-label">Address</h2>
-                    <input name="address" value="{{meta.address}}" required placeholder="Email" type="text"
-                        class="form-input ">
+                    <input name="address" value="{{meta.address}}" required placeholder="Address" type="text"
+                        class="form-input" readOnly>
                 </div>
-                <button class="btn m-auto w-50 mv-1" type="submit">Save Changes</button>
+                <!-- <button class="btn m-auto w-50 mv-1" type="submit">Save Changes</button>-->
             </div>
         </form>
     </div>
