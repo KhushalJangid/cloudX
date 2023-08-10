@@ -28,7 +28,6 @@ def download(request):
     _from = parseGet(request,"from")
     _to = parseGet(request,"to")
     _type = parseGet(request,"type")
-    print(_from,_to,_type)
     if _type != "all":
         query = Data.objects.filter(type__icontains=_type)
     else :
@@ -53,7 +52,6 @@ def filter(request):
     _from = parseGet(request,"from")
     _to = parseGet(request,"to")
     _type = parseGet(request,"type")
-    print(_from,_to,_type)
     if _type != "all":
         query = Data.objects.filter(type__icontains=_type)
     else :
@@ -190,7 +188,6 @@ def edit(request,id):
         else:
             return Response("You are not Authorized",status=status.HTTP_403_FORBIDDEN)
     query = Data.objects.get(id=id)
-    print(query.file)
     ext = query.extension()
     ctx = {
         "title":query.title,
@@ -232,12 +229,13 @@ def delete(request,id):
     
 def parse_data(queryset):
     filename = "data.xlsx"
-    # data = list(Data.objects.all().values())
+    for query in queryset:
+        print(query.user.first_name)
     data = list(queryset.values())
     if data == []:
         return None
+    print(data)
     data = df(data)
-    # data.set_index("id")
     data.loc[:,"file"] = [ f"{BASE_URL}media/{x}" for x in data.loc[:,"file"]]
     data.to_excel(filename,index=False)
     return filename

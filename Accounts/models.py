@@ -48,7 +48,7 @@ class Student(models.Model):
     # active = models.BooleanField(default=False)
     user_obj = models.OneToOneField(to = User,on_delete=models.CASCADE)
     rollno = models.CharField(null=True,unique=True,max_length=15)
-    semester = models.IntegerField()
+    batch = models.IntegerField()
     f_name = models.CharField(blank=True,null=True,max_length=40)
     f_phone = models.CharField(blank=True,null=True,unique=True,max_length=15)
     m_name = models.CharField(blank=True,null=True,max_length=40)

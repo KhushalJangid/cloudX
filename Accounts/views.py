@@ -99,7 +99,7 @@ def profile(request):
     if request.method == "POST":
         phone = request.POST.get("student-phoneNumber")
         rollno = request.POST.get("rollno")
-        sem = int(request.POST.get("semester"))
+        batch = int(request.POST.get("batch"))
         f_name = request.POST.get("father-name")
         m_name = request.POST.get("mother-name")
         f_phone = request.POST.get("father-phone-number")
@@ -110,11 +110,10 @@ def profile(request):
         user = request.user
         try :
             st = Student.objects.get(user_obj=user)
-            print(dob)
             user.phone = phone
             user.save()
             st.rollno=rollno
-            st.semester = sem
+            st.batch = batch
             st.f_name = f_name
             st.f_phone = f_phone
             st.m_name = m_name
@@ -130,7 +129,7 @@ def profile(request):
             Student.objects.create(
                 user_obj=user,
                 rollno=rollno,
-                semester = sem,
+                batch = batch,
                 f_name = f_name,
                 f_phone = f_phone,
                 m_name = m_name,

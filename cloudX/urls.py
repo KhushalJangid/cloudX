@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from cloudX import settings
+from cloudX import settings,core
 from django.conf.urls.static import static
 
 admin.site.site_header = "Cloud X"
@@ -27,4 +27,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("accounts/",include("Accounts.urls")),
     path("",include("main.urls")),
-]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)+static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
+    #path('media/<str:path>/<str:file>', core.media, name='media'),
+    
+]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+# +static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
