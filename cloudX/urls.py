@@ -25,7 +25,7 @@ admin.site.index_title = "Welcome to Admin Control Pannel"
 urlpatterns = [
     # path("",home,name="home"),
     path("admin/", admin.site.urls),
-    path("accounts/",include("Accounts.urls")),
+    path("u/",include("Accounts.urls")),
     path("",include("main.urls")),
     #path('media/<str:path>/<str:file>', core.media, name='media'),
     

@@ -58,7 +58,7 @@ MIDDLEWARE = [
 
 AUTH_USER_MODEL = 'Accounts.User'
 ROOT_URLCONF = 'cloudX.urls'
-LOGIN_URL = '/accounts/login'
+LOGIN_URL = '/u/login'
 
 TEMPLATES = [
     {

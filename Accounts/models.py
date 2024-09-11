@@ -2,20 +2,19 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from .manager import UserManager
 
-_branches = [("cse","Computer Science & Engineering"),
-             ("it","Information Technology"),
-             ("ai","Artificial Intelligence & Data Science"),
-             ("csa","Computer Science & Engineering with AI"),
-             ("ee","Electrical Engineering")
+_branches = [("CSE","Computer Science & Engineering"),
+             ("IT","Information Technology"),
+             ("AI&DS","Artificial Intelligence & Data Science"),
+             ("CS-AI","Computer Science & Engineering with AI"),
+             ("EE","Electrical Engineering"),
+             ("ECE","Electronics & Communication Engineering"),
+             ("ME","Mechanical Engineering"),
+             ("CE","Civil Engineering"),
              ]
-
-_posts = [("st","Student"),
-          ("fc","Faculty"),
-          ("ad","Admin")]
 
 _genders = [("m","Male"),
            ("f","Female"),
-           ("o","Others")]
+           ("o","Prefer not to say")]
 
 _bg = [("a","A"),
        ("b","B"),
@@ -33,7 +32,7 @@ class User(AbstractUser):
     avatar = models.ImageField(upload_to='avatars/',default='avatars/profile-user.png')
     email = models.EmailField(unique=True)
     phone = models.CharField(blank=True,null=True,unique=True,max_length=15)
-    # post = models.CharField(max_length=10,choices=_posts)
+    is_faculty = models.BooleanField(default=False)
 
     objects = UserManager()
     
@@ -43,12 +42,21 @@ class User(AbstractUser):
     def __str__(self):
         
         return f'{self.first_name} {self.last_name}'
+    
+class Class(models.Model):
+    batch = models.IntegerField()
+    branch = models.CharField(max_length=40,choices=_branches)
+    section = models.CharField(max_length=1)
+    faculty = models.OneToOneField(to=User,on_delete=models.SET_NULL,null=True,blank=True)
+    
+    def __str__(self):
+        return f"{self.batch} {self.branch} Section-{self.section}"
 
 class Student(models.Model):
     # active = models.BooleanField(default=False)
     user_obj = models.OneToOneField(to = User,on_delete=models.CASCADE)
     rollno = models.CharField(null=True,unique=True,max_length=15)
-    batch = models.IntegerField()
+    # batch = models.IntegerField()
     f_name = models.CharField(blank=True,null=True,max_length=40)
     f_phone = models.CharField(blank=True,null=True,unique=True,max_length=15)
     m_name = models.CharField(blank=True,null=True,max_length=40)
@@ -56,4 +64,6 @@ class Student(models.Model):
     gender = models.CharField(blank=True,null=True,max_length=10,choices=_genders)
     dob = models.DateField()
     address = models.TextField(blank=True,null=True,max_length=200)
+    _class = models.OneToOneField(to=Class,null=True,on_delete=models.SET_NULL)
+    
 

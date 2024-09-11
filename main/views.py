@@ -121,6 +121,27 @@ def home(request):
             "name":f"{user.first_name} {user.last_name}",
             "data":data,
         }
+        return render(request,"dashboard_admin.html",ctx)
+    elif request.user.is_faculty:
+        user = request.user
+        query = Data.objects.all()[0:20]
+        data = {}
+        i=1
+        for k in query:
+            data[i] = {
+                "id":k.id,
+                "title":k.title,
+                "type":k.get_type_display(),
+                "uname": f"{k.user.first_name} {k.user.last_name}",
+                "uid": k.user.id,
+                "date":k.date
+            }
+            i+=1
+        ctx = {
+            "avatar": user.avatar,
+            "name":f"{user.first_name} {user.last_name}",
+            "data":data,
+        }
         return render(request,"dashboard_teacher.html",ctx)
     else:
         user = request.user
